@@ -69,7 +69,7 @@ require = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({3:[function(require,module,exports) {
+})({5:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -89,7 +89,7 @@ function getID(el) {
   }
   return null;
 }
-},{}],6:[function(require,module,exports) {
+},{}],7:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -132,7 +132,7 @@ function getClassSelectors(el) {
     return '.' + cl;
   });
 }
-},{}],4:[function(require,module,exports) {
+},{}],6:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -178,7 +178,7 @@ function getCombinations(items, k) {
 
     return result;
 }
-},{}],5:[function(require,module,exports) {
+},{}],8:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -207,7 +207,7 @@ function getAttributes(el) {
     return sum;
   }, []);
 }
-},{}],11:[function(require,module,exports) {
+},{}],13:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -230,7 +230,7 @@ function isElement(el) {
   }
   return isElem;
 }
-},{}],7:[function(require,module,exports) {
+},{}],10:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -268,7 +268,7 @@ function getNthChild(element) {
   }
   return null;
 }
-},{"./isElement":11}],8:[function(require,module,exports) {
+},{"./isElement":13}],9:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -283,7 +283,7 @@ exports.getTag = getTag;
 function getTag(el) {
   return el.tagName.toLowerCase().replace(/:/g, '\\:');
 }
-},{}],10:[function(require,module,exports) {
+},{}],12:[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -301,7 +301,7 @@ function isUnique(el, selector) {
   var elems = el.ownerDocument.querySelectorAll(selector);
   return elems.length === 1 && elems[0] === el;
 }
-},{}],9:[function(require,module,exports) {
+},{}],11:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -326,7 +326,7 @@ function getParents(el) {
 
   return parents;
 }
-},{"./isElement":11}],2:[function(require,module,exports) {
+},{"./isElement":13}],3:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -585,27 +585,42 @@ function unique(el) {
 
   return null;
 }
-},{"./getID":3,"./getClasses":6,"./getCombinations":4,"./getAttributes":5,"./getNthChild":7,"./getTag":8,"./isUnique":10,"./getParents":9}],1:[function(require,module,exports) {
+},{"./getID":5,"./getClasses":7,"./getCombinations":6,"./getAttributes":8,"./getNthChild":10,"./getTag":9,"./isUnique":12,"./getParents":11}],4:[function(require,module,exports) {
+/* eslint-env browser */
+module.exports = typeof self == 'object' ? self.FormData : window.FormData;
+
+},{}],2:[function(require,module,exports) {
+
+},{}],1:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _uniqueSelector = require('unique-selector');
 
 var _uniqueSelector2 = _interopRequireDefault(_uniqueSelector);
 
+var _formData = require('form-data');
+
+var _formData2 = _interopRequireDefault(_formData);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var fs = require('fs');
 
 // const uniqueSelector = require('unique-selector');
 
 // Find index of element in siblings
-var findElementIndex = function findElementIndex(element) {
-  return Array.prototype.slice.call(element.parentNode.childNodes).filter(function (element) {
-    return element.nodeType === 1;
-  }).indexOf(element);
-};
+// const findElementIndex = element => Array.prototype.slice
+//   .call(element.parentNode.childNodes)
+//   .filter(element => element.nodeType === 1)
+//   .indexOf(element);
 
 // Finds a unique selector for an element
 // const uniqueSelector = (element, options = {}) => {
@@ -637,7 +652,6 @@ var closest = function closest(el, selector) {
   // Traverse dom to find the closest element
   while (el.parentElement) {
     if (typeof selector === 'string' && el[matches](selector) || selector instanceof window.HTMLElement && el === selector) {
-      console.log('found');
       return el;
     }
     el = el.parentElement;
@@ -647,16 +661,32 @@ var closest = function closest(el, selector) {
 
 var createSubmitHandler = function createSubmitHandler(selector, options) {
   return function (event) {
-    var form = event.target;
-    var element = closest(event.target, selector);
-    var url = form.getAttribute('action') || '.';
+    var formElement = event.target;
+    var formData = new _formData2.default(formElement);
+    var targetElement = closest(event.target, selector);
+    var url = formElement.getAttribute('action') || '.';
 
-    var request = Object.assign({
-      method: form.getAttribute('method') || options.method || 'GET'
-    }, options.request);
+    var _options$request = options.request,
+        _options$request$meth = _options$request.method,
+        method = _options$request$meth === undefined ? 'POST' : _options$request$meth,
+        headers = _options$request.headers,
+        request = _objectWithoutProperties(_options$request, ['method', 'headers']);
 
-    if (element) {
-      var remoteSelector = options.remoteSelector || (0, _uniqueSelector2.default)(element);
+    method = formElement.getAttribute('method') || method;
+    headers = Object.assign({}, method === 'POST' && {
+      'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+    }, headers);
+
+    request = _extends({}, request, { method: method, headers: headers
+    });
+
+    if (method === 'POST') {
+      request.body = formData;
+    }
+
+    if (targetElement) {
+      var remoteSelector = options.remoteSelector || (0, _uniqueSelector2.default)(targetElement);
 
       fetch(url, request).then(function (response) {
         response.text().then(function (html) {
@@ -669,7 +699,7 @@ var createSubmitHandler = function createSubmitHandler(selector, options) {
 
           if (remoteElement) {
             // Update element
-            element.innerHTML = remoteElement.innerHTML;
+            targetElement.innerHTML = remoteElement.innerHTML;
           }
         });
       });
@@ -694,13 +724,13 @@ function ajaxform(selector, options) {
       window.removeEventListener('submit', handleSubmit);
     }
   };
-};
+}
 
 // Global pollution
 window.ajaxform = ajaxform;
 
 exports.default = ajaxform;
-},{"unique-selector":2}],12:[function(require,module,exports) {
+},{"unique-selector":3,"form-data":4,"fs":2}],14:[function(require,module,exports) {
 
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
@@ -720,7 +750,7 @@ module.bundle.Module = Module;
 
 if (!module.bundle.parent && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
-  var ws = new WebSocket('ws://' + hostname + ':' + '61095' + '/');
+  var ws = new WebSocket('ws://' + hostname + ':' + '61936' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -821,5 +851,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.require, id);
   });
 }
-},{}]},{},[12,1])
+},{}]},{},[14,1])
 //# sourceMappingURL=/dist/ajaxform.map

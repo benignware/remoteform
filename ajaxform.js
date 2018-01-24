@@ -1,4 +1,9 @@
 import uniqueSelector from 'unique-selector';
+import FormData from 'form-data';
+
+const fs = require('fs');
+
+
 // const uniqueSelector = require('unique-selector');
 
 // Find index of element in siblings
@@ -41,16 +46,28 @@ const closest = (el, selector) => {
 };
 
 const createSubmitHandler = (selector, options) => event => {
-  const form = event.target;
-  const element = closest(event.target, selector);
-  const url = form.getAttribute('action') || '.';
+  const formElement = event.target;
+  const formData = new FormData(formElement);
+  const targetElement = closest(event.target, selector);
+  const url = formElement.getAttribute('action') || '.';
+  let { request: { method = 'POST', headers, ...request } } = options;
 
-  const request = Object.assign({
-    method: form.getAttribute('method') || options.method || 'GET'
-  }, options.request);
+  method = formElement.getAttribute('method') || method;
+  headers = Object.assign({}, method === 'POST' && {
+    'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+  }, headers);
 
-  if (element) {
-    const remoteSelector = options.remoteSelector || uniqueSelector(element);
+  request = {
+    ...request, method, headers
+  };
+
+  if (method === 'POST') {
+    request.body = formData;
+  }
+
+  if (targetElement) {
+    const remoteSelector = options.remoteSelector || uniqueSelector(targetElement);
 
     fetch(url, request).then(response => {
       response.text().then(html => {
@@ -63,7 +80,7 @@ const createSubmitHandler = (selector, options) => event => {
 
         if (remoteElement) {
           // Update element
-          element.innerHTML = remoteElement.innerHTML;
+          targetElement.innerHTML = remoteElement.innerHTML;
         }
       });
     });

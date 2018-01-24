@@ -5,7 +5,7 @@
   "main": "ajaxform.js",
   "scripts": {
     "start": "npm run watch & npm run start-server",
-    "start-server": "./node_modules/http-server/bin/http-server . -o",
+    "start-server": "./node_modules/http-dev-server/bin/http-dev-server -f httpconfig.js",
     "start-parcel": "./node_modules/parcel-bundler/bin/cli.js index.html",
     "watch": "./node_modules/parcel-bundler/bin/cli.js watch ./ajaxform.js",
     "build": "./node_modules/parcel-bundler/bin/cli.js build ./ajaxform.js",
@@ -20,10 +20,13 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-latest": "^6.24.1",
     "eslint": "^4.16.0",
     "fetch-mock": "^6.0.0-beta.9",
+    "formidable": "^1.1.1",
+    "http-dev-server": "^0.2.3",
     "http-server": "^0.11.1",
     "install": "^0.10.2",
     "isomorphic-fetch": "^2.2.1",
@@ -33,9 +36,12 @@
     "npm": "^5.6.0",
     "nyc": "^11.4.1",
     "parcel-bundler": "^1.5.0",
+    "qs": "^6.5.1",
+    "querystring": "^0.2.0",
     "webpack": "^3.10.0"
   },
   "dependencies": {
+    "form-data": "^2.3.1",
     "unique-selector": "^0.3.6"
   }
 }
