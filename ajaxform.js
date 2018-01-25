@@ -26,6 +26,7 @@ const createSubmitHandler = (selector, options) => event => {
 
   method = (formElement.getAttribute('method') || method).toUpperCase();
   headers = Object.assign({}, method === 'POST' && {
+    'X-Ajaxform': '*',
     'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
     'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
   }, headers);
@@ -76,6 +77,11 @@ function ajaxform(selector, options) {
       window.removeEventListener('submit', handleSubmit);
     }
   };
+}
+
+// Pollute the global namespace
+if (window) {
+  window.ajaxform = ajaxform;
 }
 
 export default ajaxform;
