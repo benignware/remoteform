@@ -26,6 +26,7 @@
     "eslint": "^4.16.0",
     "fetch-mock": "^6.0.0-beta.9",
     "formidable": "^1.1.1",
+    "get-form-data": "^2.0.0",
     "http-dev-server": "^0.2.3",
     "http-server": "^0.11.1",
     "install": "^0.10.2",

@@ -1,34 +1,6 @@
 import uniqueSelector from 'unique-selector';
-import FormData from 'form-data';
-
-const fs = require('fs');
-
-
-// const uniqueSelector = require('unique-selector');
-
-// Find index of element in siblings
-// const findElementIndex = element => Array.prototype.slice
-//   .call(element.parentNode.childNodes)
-//   .filter(element => element.nodeType === 1)
-//   .indexOf(element);
-
-// Finds a unique selector for an element
-// const uniqueSelector = (element, options = {}) => {
-//   const segments = [];
-//   let id;
-//
-//   // Traverse dom and collect parent selectors
-//   while (!element.tagName.match(/html|body/ui)) {
-//     id = element.getAttribute && element.getAttribute('id');
-//     segments.unshift(
-//       id
-//         ? '#' + id
-//         : '*:nth-child(' + ( findElementIndex(element) + 1 ) + ')'
-//     );
-//     element = element.parentNode;
-//   }
-//   return segments.join(' > ');
-// };
+import qs from 'qs';
+import getFormData from 'get-form-data';
 
 // Find the closest matching ancestor
 const closest = (el, selector) => {
@@ -47,12 +19,12 @@ const closest = (el, selector) => {
 
 const createSubmitHandler = (selector, options) => event => {
   const formElement = event.target;
-  const formData = new FormData(formElement);
+  const formData = getFormData(formElement);
   const targetElement = closest(event.target, selector);
   const url = formElement.getAttribute('action') || '.';
   let { request: { method = 'POST', headers, ...request } } = options;
 
-  method = formElement.getAttribute('method') || method;
+  method = (formElement.getAttribute('method') || method).toUpperCase();
   headers = Object.assign({}, method === 'POST' && {
     'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
     'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
@@ -63,8 +35,9 @@ const createSubmitHandler = (selector, options) => event => {
   };
 
   if (method === 'POST') {
-    request.body = formData;
+    request.body = qs.stringify(formData);
   }
+  // TODO: For get requests, merge url with query params
 
   if (targetElement) {
     const remoteSelector = options.remoteSelector || uniqueSelector(targetElement);
