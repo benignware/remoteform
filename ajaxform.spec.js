@@ -1,6 +1,6 @@
 /* eslint-env node, mocha */
 const assert = require('assert');
-const ajaxform = require('./ajaxform');
+const { default: ajaxform } = require('./ajaxform');
 const { JSDOM } = require('jsdom');
 const { readFileSync } = require('fs');
 const fetchMock = require('fetch-mock');
@@ -16,7 +16,7 @@ describe('ajaxform', () => {
     update: getContents('./update.html')
   };
 
-  fetchMock.post('submit.html', fixtures.success);
+  fetchMock.post('/submit.html', fixtures.update);
 
   beforeEach(() => {
     global.window = getView(fixtures.index);
@@ -24,9 +24,9 @@ describe('ajaxform', () => {
   });
 
   it('should post form and update specified element', (done) => {
-    const element = document.querySelector('.container');
+    const element = document.querySelector('.ajaxform');
     const form = element.querySelector('form');
-    const expected = getView(fixtures.success).document.querySelector('.container').innerHTML;
+    const expected = getView(fixtures.update).document.querySelector('.ajaxform').innerHTML;
 
     // Initialize ajaxform
     ajaxform(element);

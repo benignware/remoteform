@@ -9,8 +9,8 @@
     "start-parcel": "./node_modules/parcel-bundler/bin/cli.js index.html",
     "watch": "./node_modules/parcel-bundler/bin/cli.js watch ./ajaxform.js",
     "build": "./node_modules/parcel-bundler/bin/cli.js build ./ajaxform.js",
-    "test": "./node_modules/mocha/bin/mocha ajaxform.spec.js",
-    "lint": "./node_modules/.bin/eslint"
+    "test": "./node_modules/mocha/bin/mocha ajaxform.spec.js --require babel-core/register",
+    "lint": "./node_modules/.bin/eslint ajaxform.js"
   },
   "keywords": [
     "ajax",

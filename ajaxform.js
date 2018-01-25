@@ -22,7 +22,7 @@ const createSubmitHandler = (selector, options) => event => {
   const formData = getFormData(formElement);
   const targetElement = closest(event.target, selector);
   const url = formElement.getAttribute('action') || '.';
-  let { request: { method = 'POST', headers, ...request } } = options;
+  let { request: { method = 'POST', headers, ...request } } = options;
 
   method = (formElement.getAttribute('method') || method).toUpperCase();
   headers = Object.assign({}, method === 'POST' && {
@@ -78,8 +78,5 @@ function ajaxform(selector, options) {
     }
   };
 }
-
-// Global pollution
-window.ajaxform = ajaxform;
 
 export default ajaxform;
