@@ -57,9 +57,8 @@ const createSubmitHandler = (selector, options) => event => {
         }
       });
     });
+    event.preventDefault();
   }
-
-  event.preventDefault();
 };
 
 function ajaxform(selector, options) {
