@@ -1,6 +1,6 @@
 /* eslint-env node, mocha */
 const assert = require('assert');
-const { default: ajaxform } = require('./ajaxform');
+const { default: remoteform } = require('./remoteform');
 const { JSDOM } = require('jsdom');
 const { readFileSync } = require('fs');
 const fetchMock = require('fetch-mock');
@@ -10,7 +10,7 @@ require('isomorphic-fetch');
 const getContents = file => readFileSync(file, 'utf-8');
 const getView = html => (new JSDOM(html)).window;
 
-describe('ajaxform', () => {
+describe('remoteform', () => {
   const fixtures = {
     index: getContents('./index.html'),
     update: getContents('./update.html')
@@ -24,12 +24,12 @@ describe('ajaxform', () => {
   });
 
   it('should post form and update specified element', (done) => {
-    const element = document.querySelector('.ajaxform');
+    const element = document.querySelector('.remoteform');
     const form = element.querySelector('form');
-    const expected = getView(fixtures.update).document.querySelector('.ajaxform').innerHTML;
+    const expected = getView(fixtures.update).document.querySelector('.remoteform').innerHTML;
 
-    // Initialize ajaxform
-    ajaxform(element);
+    // Initialize remoteform
+    remoteform(element);
 
     // Simulate event
     const event = new window.Event('submit', {

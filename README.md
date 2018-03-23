@@ -1,25 +1,25 @@
-# ajaxform
+# remoteform
 
-Simple ajaxform automation
+Simple remoteform automation
 
 ## Install
 
 First of all install [nodejs](https://nodejs.org]) if you haven't already.
 
-In your project directory, hit the following command order to install `ajaxform`:
+In your project directory, hit the following command order to install `remoteform`:
 
 ```cli
-npm install ajaxform --save
+npm install remoteform --save
 ```
 
-`ajaxform` relies on `fetch` for making requests, hence you may need to install a [polyfill](https://www.npmjs.com/package/isomorphic-fetch) in addition.
+`remoteform` relies on `fetch` for making requests, hence you may need to install a [polyfill](https://www.npmjs.com/package/isomorphic-fetch) in addition.
 
 ## Usage
 
 Create your html form
 
 ```html
-<div id="test" class="ajaxform">
+<div id="test" class="remoteform">
   <form action="/submit.html" method="POST">
     <div class="form-group">
       <input class="form-control" name="test" value=""/>
@@ -29,24 +29,24 @@ Create your html form
 </div>
 ```
 
-Import `ajaxform` to your bundle and initialize with the specified selector:
+Import `remoteform` to your bundle and initialize with the specified selector:
 
 ```js
-const ajaxform = require('ajaxform');
+const remoteform = require('remoteform');
 
-ajaxform('#test');
+remoteform('#test');
 ```
 
 If you control all forms on your site, you may want to ajaxify all forms globally by omitting the selector or passing in `form`.
 
 ### Customizing response selector
 
-By default, `ajaxform` generates a unique selector for the given element against which it matches the response. You can customize the `responseSelector` by specifying the corresponding option as follows.
+By default, `remoteform` generates a unique selector for the given element against which it matches the response. You can customize the `responseSelector` by specifying the corresponding option as follows.
 
 ```js
-const ajaxform = require('ajaxform');
+const remoteform = require('remoteform');
 
-ajaxform('#test', {
+remoteform('#test', {
   responseSelector: '.my-response-selector'
 });
 ```

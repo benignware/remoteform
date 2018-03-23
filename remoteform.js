@@ -27,7 +27,7 @@ const createSubmitHandler = (selector, options) => event => {
 
   request.method = (formElement.getAttribute('method') || request.method).toUpperCase();
   request.headers = Object.assign({}, request.method === 'POST' && {
-    'X-Ajaxform': '*',
+    'X-remoteform': '*',
     'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
     'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
   }, request.headers);
@@ -66,7 +66,7 @@ const createSubmitHandler = (selector, options) => event => {
   }
 };
 
-function ajaxform(selector = 'form', options = {}) {
+function remoteform(selector = 'form', options = {}) {
   options = Object.assign({
     responseSelector: '',
     request: Object.assign({
@@ -85,7 +85,7 @@ function ajaxform(selector = 'form', options = {}) {
 
 // Pollute the global namespace
 if (typeof window !== 'undefined') {
-  window.ajaxform = ajaxform;
+  window.remoteform = remoteform;
 }
 
-export default ajaxform;
+export default remoteform;

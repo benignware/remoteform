@@ -2,17 +2,17 @@
 <html>
   <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-    <script src="/dist/ajaxform.js"></script>
+    <script src="/dist/remoteform.js"></script>
     <script>
-      ajaxform('.ajaxform');
+      remoteform('#test');
     </script>
   </head>
   <body>
     <div class="site p-4">
-      <div class="ajaxform">
-        <h1>ajaxform</h1>
-        <p>Simple ajaxform automation<p>
-        <div id="test" class="ajaxform">
+      <div>
+        <h1>remoteform</h1>
+        <p>Ajaxify forms easily<p>
+        <div id="test" class="remoteform">
           <form action="/submit.html" method="POST">
             <div class="form-group">
               <input class="form-control" name="test" value=""/>
