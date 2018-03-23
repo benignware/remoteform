@@ -1,6 +1,6 @@
 # remoteform
 
-Simple remoteform automation
+Ajaxify forms easily
 
 ## Install
 
