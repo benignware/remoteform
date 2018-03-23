@@ -22,24 +22,20 @@ const createSubmitHandler = (selector, options) => event => {
   const formData = getFormData(formElement);
   const targetElement = closest(event.target, selector);
   const url = formElement.getAttribute('action') || '.';
-  let { request: { method = 'POST', headers, ...request } } = options;
 
-  method = (formElement.getAttribute('method') || method).toUpperCase();
-  headers = Object.assign({}, method === 'POST' && {
+  let { request } = options;
+
+  request.method = (formElement.getAttribute('method') || request.method).toUpperCase();
+  request.headers = Object.assign({}, request.method === 'POST' && {
     'X-Ajaxform': '*',
     'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
     'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-  }, headers);
+  }, request.headers);
 
-  request = {
-    ...request, method, headers
-  };
-
-  if (method === 'POST') {
+  if (request.method === 'POST') {
     request.body = qs.stringify(formData);
   }
   // TODO: For get requests, merge url with query params
-
   if (targetElement) {
     const remoteSelector = options.remoteSelector || uniqueSelector(targetElement);
 
@@ -53,7 +49,15 @@ const createSubmitHandler = (selector, options) => event => {
         const remoteElement = dom.querySelector(remoteSelector);
 
         if (remoteElement) {
-          // Update element
+          // Remove attributes
+          for (let { name } of dom.attributes) {
+            targetElement.removeAttribute(name);
+          }
+          // Update attributes
+          for (let { name, value } of remoteElement.attributes) {
+            targetElement.setAttribute(name, value);
+          }
+          // Update content
           targetElement.innerHTML = remoteElement.innerHTML;
         }
       });
@@ -62,12 +66,12 @@ const createSubmitHandler = (selector, options) => event => {
   }
 };
 
-function ajaxform(selector, options) {
+function ajaxform(selector = 'form', options = {}) {
   options = Object.assign({
     responseSelector: '',
-    request: {
+    request: Object.assign({
       // Options passed to fetch
-    }
+    }, options.request)
   }, options);
   const handleSubmit = createSubmitHandler(selector, options);
   document.addEventListener('submit', handleSubmit);
@@ -80,7 +84,7 @@ function ajaxform(selector, options) {
 }
 
 // Pollute the global namespace
-if (window) {
+if (typeof window !== 'undefined') {
   window.ajaxform = ajaxform;
 }
 
