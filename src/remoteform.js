@@ -67,13 +67,17 @@ const createSubmitHandler = (selector, options) => event => {
 };
 
 function remoteform(selector = 'form', options = {}) {
-  options = Object.assign({
+  options = {
     responseSelector: '',
-    request: Object.assign({
+    request: {
       // Options passed to fetch
-    }, options.request)
-  }, options);
+      ...options.request
+    },
+    ...options
+  };
+
   const handleSubmit = createSubmitHandler(selector, options);
+
   document.addEventListener('submit', handleSubmit);
 
   return {
@@ -83,9 +87,7 @@ function remoteform(selector = 'form', options = {}) {
   };
 }
 
-// Pollute the global namespace
-if (typeof window !== 'undefined') {
-  window.remoteform = remoteform;
-}
+// Pollute the global namespace accidentally ;-)
+global.remoteform = remoteform;
 
 export default remoteform;

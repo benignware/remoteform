@@ -6,5 +6,7 @@ node_modules
 **/node_modules
 npm-debug.log
 
-# Parcel
+# Temp
+tmp
+temp
 .cache

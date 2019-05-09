@@ -1,18 +1,18 @@
 /* eslint-disable no-console */
 const { readFileSync } = require('fs');
-const { join: joinPath } = require('path');
+const path = require('path');
 const { IncomingForm } = require('formidable');
 
 module.exports = {
-  hostname: '0.0.0.0',
-  port: '3000',
-  webPath: __dirname,
+  hostname: 'localhost',
+  port: '3011',
+  webPath: path.join(__dirname, 'dist'),
   mockPath: __dirname,
   logLevel: 'debug',
   mocks: {
     '/submit.html': {
       post: function(request, response) {
-        const html = readFileSync(joinPath(__dirname, 'update.html'));
+        const html = readFileSync(path.join(__dirname, 'test/fixtures/update.html'));
         const form = new IncomingForm();
         const { headers } = request;
 
