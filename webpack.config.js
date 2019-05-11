@@ -58,6 +58,9 @@ module.exports = {
       [pkg.name]: path.resolve(__dirname, pkg.name)
     }
   },
+  optimization: {
+    minimize: false
+  },
   devServer: {
     index: 'index.html',
     open: true,
