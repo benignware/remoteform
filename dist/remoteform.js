@@ -873,9 +873,7 @@ getFormData.getFieldData = getFieldData;
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(8);
-__webpack_require__(21);
-module.exports = __webpack_require__(22);
+module.exports = __webpack_require__(8);
 
 
 /***/ }),
@@ -1873,18 +1871,6 @@ module.exports = function (str, opts) {
     return utils.compact(obj);
 };
 
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "index.html";
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "update.html";
 
 /***/ })
 /******/ ]);

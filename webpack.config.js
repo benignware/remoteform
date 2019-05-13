@@ -3,7 +3,7 @@ const { sync: glob } = require('glob');
 
 const context = path.join(__dirname, 'src');
 const pkg = require('./package.json');
-const mode = 'development';
+const mode = process.env.NODE_ENV || 'development';
 
 const entry = [
   path.join(context, `${pkg.name}.js`)
@@ -25,12 +25,15 @@ module.exports = {
   module: {
     rules: [{
       test: /\.m?js$/,
-      exclude: /(node_modules|bower_components)/,
+      exclude: /node_modules\/(?!(unique-selector)\/).*/,
       use: {
         loader: 'babel-loader',
         options: {
           presets: [ '@babel/preset-env' ],
-          plugins: [ '@babel/transform-runtime' ]
+          plugins: [
+            '@babel/transform-runtime',
+            '@babel/plugin-transform-spread'
+          ]
         }
       }
     }, {
