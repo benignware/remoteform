@@ -81,53 +81,33 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var defineProperty = __webpack_require__(10);
-
-function _objectSpread(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-    var ownKeys = Object.keys(source);
-
-    if (typeof Object.getOwnPropertySymbols === 'function') {
-      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-      }));
-    }
-
-    ownKeys.forEach(function (key) {
-      defineProperty(target, key, source[key]);
-    });
-  }
-
-  return target;
-}
-
-module.exports = _objectSpread;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
+
+function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol" ? function (obj) {
+  return _typeof2(obj);
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+};
 
 exports.isElement = isElement;
 /**
  * Determines if the passed el is a DOM element
  */
+
 function isElement(el) {
   var isElem = void 0;
 
@@ -136,11 +116,12 @@ function isElement(el) {
   } else {
     isElem = !!el && (typeof el === 'undefined' ? 'undefined' : _typeof(el)) === 'object' && el.nodeType === 1 && typeof el.nodeName === 'string';
   }
+
   return isElem;
 }
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -377,7 +358,7 @@ module.exports = {
 
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -402,7 +383,7 @@ module.exports = {
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -411,32 +392,33 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = unique;
+exports["default"] = unique;
 
-var _getID = __webpack_require__(11);
+var _getID = __webpack_require__(9);
 
-var _getClasses = __webpack_require__(12);
+var _getClasses = __webpack_require__(10);
 
-var _getCombinations = __webpack_require__(13);
+var _getCombinations = __webpack_require__(11);
 
-var _getAttributes = __webpack_require__(14);
+var _getAttributes = __webpack_require__(12);
 
-var _getNthChild = __webpack_require__(15);
+var _getNthChild = __webpack_require__(13);
 
-var _getTag = __webpack_require__(16);
+var _getTag = __webpack_require__(14);
 
-var _isUnique = __webpack_require__(17);
+var _isUnique = __webpack_require__(15);
 
-var _getParents = __webpack_require__(18);
-
+var _getParents = __webpack_require__(16);
 /**
  * Returns all the selectors of the elmenet
  * @param  { Object } element
  * @return { Object }
  */
+
 /**
  * Expose `unique`
  */
+
 
 function getAllSelectors(el, selectors, attributesToIgnore) {
   var funcs = {
@@ -448,36 +430,35 @@ function getAllSelectors(el, selectors, attributesToIgnore) {
     'Class': _getClasses.getClassSelectors,
     'ID': _getID.getID
   };
-
   return selectors.reduce(function (res, next) {
     res[next] = funcs[next](el);
     return res;
   }, {});
 }
-
 /**
  * Tests uniqueNess of the element inside its parent
  * @param  { Object } element
  * @param { String } Selectors
  * @return { Boolean }
  */
+
+
 function testUniqueness(element, selector) {
   var parentNode = element.parentNode;
-
   var elements = parentNode.querySelectorAll(selector);
   return elements.length === 1 && elements[0] === element;
 }
-
 /**
  * Tests all selectors for uniqueness and returns the first unique selector.
  * @param  { Object } element
  * @param  { Array } selectors
  * @return { String }
  */
+
+
 function getFirstUnique(element, selectors) {
   return selectors.find(testUniqueness.bind(null, element));
 }
-
 /**
  * Checks all the possible selectors of an element to find one unique and return it
  * @param  { Object } element
@@ -485,6 +466,8 @@ function getFirstUnique(element, selectors) {
  * @param  { String } tag
  * @return { String }
  */
+
+
 function getUniqueCombination(element, items, tag) {
   var combinations = (0, _getCombinations.getCombinations)(items, 3),
       firstUnique = getFirstUnique(element, combinations);
@@ -506,18 +489,17 @@ function getUniqueCombination(element, items, tag) {
 
   return null;
 }
-
 /**
  * Returns a uniqueSelector based on the passed options
  * @param  { DOM } element
  * @param  { Array } options
  * @return { String }
  */
+
+
 function getUniqueSelector(element, selectorTypes, attributesToIgnore) {
   var foundSelector = void 0;
-
   var elementSelectors = getAllSelectors(element, selectorTypes, attributesToIgnore);
-
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
   var _iteratorError = undefined;
@@ -536,36 +518,43 @@ function getUniqueSelector(element, selectorTypes, attributesToIgnore) {
           if (Boolean(ID) && testUniqueness(element, ID)) {
             return ID;
           }
+
           break;
 
         case 'Tag':
           if (Boolean(Tag) && testUniqueness(element, Tag)) {
             return Tag;
           }
+
           break;
 
         case 'Class':
           if (Boolean(Classes) && Classes.length) {
             foundSelector = getUniqueCombination(element, Classes, Tag);
+
             if (foundSelector) {
               return foundSelector;
             }
           }
+
           break;
 
         case 'Attributes':
           if (Boolean(Attributes) && Attributes.length) {
             foundSelector = getUniqueCombination(element, Attributes, Tag);
+
             if (foundSelector) {
               return foundSelector;
             }
           }
+
           break;
 
         case 'NthChild':
           if (Boolean(NthChild)) {
             return NthChild;
           }
+
       }
     }
   } catch (err) {
@@ -573,8 +562,8 @@ function getUniqueSelector(element, selectorTypes, attributesToIgnore) {
     _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
-        _iterator.return();
+      if (!_iteratorNormalCompletion && _iterator["return"]) {
+        _iterator["return"]();
       }
     } finally {
       if (_didIteratorError) {
@@ -585,7 +574,6 @@ function getUniqueSelector(element, selectorTypes, attributesToIgnore) {
 
   return '*';
 }
-
 /**
  * Generate unique CSS selector for given DOM element
  *
@@ -594,16 +582,15 @@ function getUniqueSelector(element, selectorTypes, attributesToIgnore) {
  * @api private
  */
 
+
 function unique(el) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var _options$selectorType = options.selectorTypes,
       selectorTypes = _options$selectorType === undefined ? ['ID', 'Class', 'Tag', 'NthChild'] : _options$selectorType,
       _options$attributesTo = options.attributesToIgnore,
       attributesToIgnore = _options$attributesTo === undefined ? ['id', 'class', 'length'] : _options$attributesTo;
-
   var allSelectors = [];
   var parents = (0, _getParents.getParents)(el);
-
   var _iteratorNormalCompletion2 = true;
   var _didIteratorError2 = false;
   var _iteratorError2 = undefined;
@@ -611,8 +598,8 @@ function unique(el) {
   try {
     for (var _iterator2 = parents[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
       var elem = _step2.value;
-
       var selector = getUniqueSelector(elem, selectorTypes, attributesToIgnore);
+
       if (Boolean(selector)) {
         allSelectors.push(selector);
       }
@@ -622,8 +609,8 @@ function unique(el) {
     _iteratorError2 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion2 && _iterator2.return) {
-        _iterator2.return();
+      if (!_iteratorNormalCompletion2 && _iterator2["return"]) {
+        _iterator2["return"]();
       }
     } finally {
       if (_didIteratorError2) {
@@ -640,9 +627,10 @@ function unique(el) {
   try {
     for (var _iterator3 = allSelectors[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
       var it = _step3.value;
-
       selectors.unshift(it);
+
       var _selector = selectors.join(' > ');
+
       if ((0, _isUnique.isUnique)(el, _selector)) {
         return _selector;
       }
@@ -652,8 +640,8 @@ function unique(el) {
     _iteratorError3 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion3 && _iterator3.return) {
-        _iterator3.return();
+      if (!_iteratorNormalCompletion3 && _iterator3["return"]) {
+        _iterator3["return"]();
       }
     } finally {
       if (_didIteratorError3) {
@@ -666,15 +654,15 @@ function unique(el) {
 }
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var stringify = __webpack_require__(19);
-var parse = __webpack_require__(20);
-var formats = __webpack_require__(3);
+var stringify = __webpack_require__(17);
+var parse = __webpack_require__(18);
+var formats = __webpack_require__(2);
 
 module.exports = {
     formats: formats,
@@ -684,7 +672,7 @@ module.exports = {
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -870,29 +858,132 @@ function getFormElementValue(element, trim) {
 getFormData.getFieldData = getFieldData;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(8);
+module.exports = __webpack_require__(7);
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
-/* harmony import */ var _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var unique_selector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
-/* harmony import */ var unique_selector__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(unique_selector__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
-/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(qs__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var get_form_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6);
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var unique_selector__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* harmony import */ var unique_selector__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(unique_selector__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(qs__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var get_form_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 
 
- // Find the closest matching ancestor
+
+
+var updateElement = function updateElement(element, otherElement) {
+  var updateContent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = element.attributes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var name = _step.value.name;
+
+      if (!otherElement.hasAttribute(name)) {
+        element.removeAttribute(name);
+      }
+    } // Update attributes
+
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+        _iterator["return"]();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  var _iteratorNormalCompletion2 = true;
+  var _didIteratorError2 = false;
+  var _iteratorError2 = undefined;
+
+  try {
+    for (var _iterator2 = otherElement.attributes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      var _step2$value = _step2.value,
+          name = _step2$value.name,
+          value = _step2$value.value;
+      element.setAttribute(name, value);
+    }
+  } catch (err) {
+    _didIteratorError2 = true;
+    _iteratorError2 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+        _iterator2["return"]();
+      }
+    } finally {
+      if (_didIteratorError2) {
+        throw _iteratorError2;
+      }
+    }
+  }
+
+  if (updateContent) {
+    // Update content
+    var fragment = document.createDocumentFragment();
+
+    var children = _toConsumableArray(otherElement.childNodes);
+
+    var _iteratorNormalCompletion3 = true;
+    var _didIteratorError3 = false;
+    var _iteratorError3 = undefined;
+
+    try {
+      for (var _iterator3 = children[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+        var child = _step3.value;
+        fragment.appendChild(child);
+      }
+    } catch (err) {
+      _didIteratorError3 = true;
+      _iteratorError3 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+          _iterator3["return"]();
+        }
+      } finally {
+        if (_didIteratorError3) {
+          throw _iteratorError3;
+        }
+      }
+    }
+
+    element.innerHTML = '';
+    element.appendChild(fragment);
+  }
+
+  return element;
+}; // Find the closest matching ancestor
+
 
 var closest = function closest(el, selector) {
   // Detect vendor name
@@ -916,7 +1007,7 @@ var closest = function closest(el, selector) {
 var createSubmitHandler = function createSubmitHandler(selector, options) {
   return function (event) {
     var formElement = event.target;
-    var formData = Object(get_form_data__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"])(formElement);
+    var formData = Object(get_form_data__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"])(formElement);
     var targetElement = closest(event.target, selector);
     var url = formElement.getAttribute('action') || '.';
     var request = options.request;
@@ -928,75 +1019,38 @@ var createSubmitHandler = function createSubmitHandler(selector, options) {
     }, request.headers);
 
     if (request.method === 'POST') {
-      request.body = qs__WEBPACK_IMPORTED_MODULE_2___default.a.stringify(formData);
+      request.body = qs__WEBPACK_IMPORTED_MODULE_1___default.a.stringify(formData);
     } // TODO: For get requests, merge url with query params
 
 
     if (targetElement) {
-      var remoteSelector = options.remoteSelector || unique_selector__WEBPACK_IMPORTED_MODULE_1___default()(targetElement);
+      var remoteSelector = options.remoteSelector || unique_selector__WEBPACK_IMPORTED_MODULE_0___default()(targetElement);
       fetch(url, request).then(function (response) {
         response.text().then(function (html) {
           // Parse html
           var dom = document.createElement('div');
-          dom.innerHTML = html; // Find element
+          dom.innerHTML = html; // Find remote element
 
-          var remoteElement = dom.querySelector(remoteSelector);
+          var remoteElement = dom.querySelector(remoteSelector); // Find permanent elements
+
+          _toConsumableArray(remoteElement.querySelectorAll('*[remoteform-permanent]')).map(function (remotePermanentElement) {
+            return {
+              remotePermanentElement: remotePermanentElement,
+              permanentElement: targetElement.querySelector("*[id='".concat(remotePermanentElement.getAttribute('id'), "']"))
+            };
+          }).forEach(function (_ref) {
+            var permanentElement = _ref.permanentElement,
+                remotePermanentElement = _ref.remotePermanentElement;
+            remotePermanentElement.parentNode.insertBefore(permanentElement, remotePermanentElement);
+            remotePermanentElement.parentNode.removeChild(remotePermanentElement);
+          });
 
           if (remoteElement) {
-            // Remove attributes
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-              for (var _iterator = dom.attributes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var name = _step.value.name;
-                targetElement.removeAttribute(name);
-              } // Update attributes
-
-            } catch (err) {
-              _didIteratorError = true;
-              _iteratorError = err;
-            } finally {
-              try {
-                if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-                  _iterator["return"]();
-                }
-              } finally {
-                if (_didIteratorError) {
-                  throw _iteratorError;
-                }
-              }
+            if (typeof options.update === 'function') {
+              options.update(targetElement, remoteElement);
             }
 
-            var _iteratorNormalCompletion2 = true;
-            var _didIteratorError2 = false;
-            var _iteratorError2 = undefined;
-
-            try {
-              for (var _iterator2 = remoteElement.attributes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                var _step2$value = _step2.value,
-                    name = _step2$value.name,
-                    value = _step2$value.value;
-                targetElement.setAttribute(name, value);
-              } // Update content
-
-            } catch (err) {
-              _didIteratorError2 = true;
-              _iteratorError2 = err;
-            } finally {
-              try {
-                if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-                  _iterator2["return"]();
-                }
-              } finally {
-                if (_didIteratorError2) {
-                  throw _iteratorError2;
-                }
-              }
-            }
-
-            targetElement.innerHTML = remoteElement.innerHTML;
+            updateElement(targetElement, remoteElement);
           }
         });
       });
@@ -1008,9 +1062,9 @@ var createSubmitHandler = function createSubmitHandler(selector, options) {
 function remoteform() {
   var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'form';
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  options = _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({
+  options = _objectSpread({
     responseSelector: '',
-    request: _babel_runtime_helpers_objectSpread__WEBPACK_IMPORTED_MODULE_0___default()({}, options.request)
+    request: _objectSpread({}, options.request)
   }, options);
   var handleSubmit = createSubmitHandler(selector, options);
   document.addEventListener('submit', handleSubmit);
@@ -1024,10 +1078,10 @@ function remoteform() {
 
 global.remoteform = remoteform;
 /* harmony default export */ __webpack_exports__["default"] = (remoteform);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(8)))
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports) {
 
 var g;
@@ -1053,28 +1107,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
-
-/***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1089,17 +1122,19 @@ exports.getID = getID;
  * @param  { Object } element
  * @return { String }
  */
+
 function getID(el) {
   var id = el.getAttribute('id');
 
   if (id !== null && id !== '') {
     return '#' + id;
   }
+
   return null;
 }
 
 /***/ }),
-/* 12 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1116,6 +1151,7 @@ exports.getClassSelectors = getClassSelectors;
  * @pararm { Element } el
  * @return { Array }
  */
+
 function getClasses(el) {
   if (!el.hasAttribute('class')) {
     return [];
@@ -1124,21 +1160,20 @@ function getClasses(el) {
   try {
     return Array.prototype.slice.call(el.classList);
   } catch (e) {
-    var className = el.getAttribute('class');
+    var className = el.getAttribute('class'); // remove duplicate and leading/trailing whitespaces
 
-    // remove duplicate and leading/trailing whitespaces
-    className = className.trim().replace(/\s+/g, ' ');
+    className = className.trim().replace(/\s+/g, ' '); // split into separate classnames
 
-    // split into separate classnames
     return className.split(' ');
   }
 }
-
 /**
  * Returns the Class selectors of the element
  * @param  { Object } element
  * @return { Array }
  */
+
+
 function getClassSelectors(el) {
   var classList = getClasses(el).filter(Boolean);
   return classList.map(function (cl) {
@@ -1147,14 +1182,14 @@ function getClassSelectors(el) {
 }
 
 /***/ }),
-/* 13 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.getCombinations = getCombinations;
 /**
@@ -1167,38 +1202,40 @@ exports.getCombinations = getCombinations;
  * @param  { Number } index
  * @param  { Number } k
  */
+
 function kCombinations(result, items, data, start, end, index, k) {
-    if (index === k) {
-        result.push(data.slice(0, index).join(''));
-        return;
-    }
+  if (index === k) {
+    result.push(data.slice(0, index).join(''));
+    return;
+  }
 
-    for (var i = start; i <= end && end - i + 1 >= k - index; ++i) {
-        data[index] = items[i];
-        kCombinations(result, items, data, i + 1, end, index + 1, k);
-    }
+  for (var i = start; i <= end && end - i + 1 >= k - index; ++i) {
+    data[index] = items[i];
+    kCombinations(result, items, data, i + 1, end, index + 1, k);
+  }
 }
-
 /**
  * Returns all the possible selector combinations
  * @param  { Array } items
  * @param  { Number } k
  * @return { Array }
  */
+
+
 function getCombinations(items, k) {
-    var result = [],
-        n = items.length,
-        data = [];
+  var result = [],
+      n = items.length,
+      data = [];
 
-    for (var l = 1; l <= k; ++l) {
-        kCombinations(result, items, data, 0, n - 1, 0, l);
-    }
+  for (var l = 1; l <= k; ++l) {
+    kCombinations(result, items, data, 0, n - 1, 0, l);
+  }
 
-    return result;
+  return result;
 }
 
 /***/ }),
-/* 14 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1209,30 +1246,40 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getAttributes = getAttributes;
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+function _toConsumableArray(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
 
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+}
 /**
  * Returns the Attribute selectors of the element
  * @param  { DOM Element } element
  * @param  { Array } array of attributes to ignore
  * @return { Array }
  */
+
+
 function getAttributes(el) {
   var attributesToIgnore = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ['id', 'class', 'length'];
   var attributes = el.attributes;
-
   var attrs = [].concat(_toConsumableArray(attributes));
-
   return attrs.reduce(function (sum, next) {
     if (!(attributesToIgnore.indexOf(next.nodeName) > -1)) {
       sum.push('[' + next.nodeName + '="' + next.value + '"]');
     }
+
     return sum;
   }, []);
 }
 
 /***/ }),
-/* 15 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1243,39 +1290,42 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getNthChild = getNthChild;
 
-var _isElement = __webpack_require__(1);
-
+var _isElement = __webpack_require__(0);
 /**
  * Returns the selectors based on the position of the element relative to its siblings
  * @param  { Object } element
  * @return { Array }
  */
+
+
 function getNthChild(element) {
   var counter = 0;
   var k = void 0;
   var sibling = void 0;
   var parentNode = element.parentNode;
 
-
   if (Boolean(parentNode)) {
     var childNodes = parentNode.childNodes;
-
     var len = childNodes.length;
+
     for (k = 0; k < len; k++) {
       sibling = childNodes[k];
+
       if ((0, _isElement.isElement)(sibling)) {
         counter++;
+
         if (sibling === element) {
           return ':nth-child(' + counter + ')';
         }
       }
     }
   }
+
   return null;
 }
 
 /***/ }),
-/* 16 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1290,12 +1340,13 @@ exports.getTag = getTag;
  * @param  { Object } element
  * @return { String }
  */
+
 function getTag(el) {
   return el.tagName.toLowerCase().replace(/:/g, '\\:');
 }
 
 /***/ }),
-/* 17 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1311,6 +1362,7 @@ exports.isUnique = isUnique;
  * @param  { String } selector
  * @return { Array }
  */
+
 function isUnique(el, selector) {
   if (!Boolean(selector)) return false;
   var elems = el.ownerDocument.querySelectorAll(selector);
@@ -1318,7 +1370,7 @@ function isUnique(el, selector) {
 }
 
 /***/ }),
-/* 18 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1329,16 +1381,18 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getParents = getParents;
 
-var _isElement = __webpack_require__(1);
-
+var _isElement = __webpack_require__(0);
 /**
  * Returns all the element and all of its parents
  * @param { DOM Element }
  * @return { Array of DOM elements }
  */
+
+
 function getParents(el) {
   var parents = [];
   var currentElement = el;
+
   while ((0, _isElement.isElement)(currentElement)) {
     parents.push(currentElement);
     currentElement = currentElement.parentNode;
@@ -1348,14 +1402,14 @@ function getParents(el) {
 }
 
 /***/ }),
-/* 19 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(2);
-var formats = __webpack_require__(3);
+var utils = __webpack_require__(1);
+var formats = __webpack_require__(2);
 var has = Object.prototype.hasOwnProperty;
 
 var arrayPrefixGenerators = {
@@ -1624,13 +1678,13 @@ module.exports = function (object, opts) {
 
 
 /***/ }),
-/* 20 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(1);
 
 var has = Object.prototype.hasOwnProperty;
 

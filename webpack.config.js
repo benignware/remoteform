@@ -31,7 +31,7 @@ module.exports = {
         options: {
           presets: [ '@babel/preset-env' ],
           plugins: [
-            '@babel/transform-runtime',
+            // '@babel/transform-runtime',
             '@babel/plugin-transform-spread'
           ]
         }

@@ -2,6 +2,35 @@ import uniqueSelector from 'unique-selector';
 import qs from 'qs';
 import getFormData from 'get-form-data';
 
+
+const updateElement = (element, otherElement, updateContent = true) => {
+  for (let { name } of element.attributes) {
+    if (!otherElement.hasAttribute(name)) {
+      element.removeAttribute(name);
+    }
+  }
+
+  // Update attributes
+  for (let { name, value } of otherElement.attributes) {
+    element.setAttribute(name, value);
+  }
+
+  if (updateContent) {
+    // Update content
+    const fragment = document.createDocumentFragment();
+    const children = [ ...otherElement.childNodes ];
+
+    for (let child of children) {
+      fragment.appendChild(child);
+    }
+
+    element.innerHTML = '';
+    element.appendChild(fragment);
+  }
+
+  return element;
+};
+
 // Find the closest matching ancestor
 const closest = (el, selector) => {
   // Detect vendor name
@@ -45,20 +74,26 @@ const createSubmitHandler = (selector, options) => event => {
         const dom = document.createElement( 'div' );
         dom.innerHTML = html;
 
-        // Find element
+        // Find remote element
         const remoteElement = dom.querySelector(remoteSelector);
 
+        // Find permanent elements
+        [ ...remoteElement.querySelectorAll('*[remoteform-permanent]') ]
+          .map((remotePermanentElement) => ({
+            remotePermanentElement,
+            permanentElement: targetElement.querySelector(`*[id='${remotePermanentElement.getAttribute('id')}']`),
+          }))
+          .forEach(({ permanentElement, remotePermanentElement }) => {
+            remotePermanentElement.parentNode.insertBefore(permanentElement, remotePermanentElement);
+            remotePermanentElement.parentNode.removeChild(remotePermanentElement);
+          });
+
         if (remoteElement) {
-          // Remove attributes
-          for (let { name } of dom.attributes) {
-            targetElement.removeAttribute(name);
+          if (typeof options.update === 'function') {
+            options.update(targetElement, remoteElement);
           }
-          // Update attributes
-          for (let { name, value } of remoteElement.attributes) {
-            targetElement.setAttribute(name, value);
-          }
-          // Update content
-          targetElement.innerHTML = remoteElement.innerHTML;
+
+          updateElement(targetElement, remoteElement);
         }
       });
     });
