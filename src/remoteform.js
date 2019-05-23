@@ -78,11 +78,12 @@ const createSubmitHandler = (selector, options) => event => {
         const remoteElement = dom.querySelector(remoteSelector);
 
         // Find permanent elements
-        [ ...remoteElement.querySelectorAll('*[remoteform-permanent]') ]
+        [ ...remoteElement.querySelectorAll('*[data-remoteform-permanent]') ]
           .map((remotePermanentElement) => ({
             remotePermanentElement,
             permanentElement: targetElement.querySelector(`*[id='${remotePermanentElement.getAttribute('id')}']`),
           }))
+          .filter(({ permanentElement }) => permanentElement)
           .forEach(({ permanentElement, remotePermanentElement }) => {
             remotePermanentElement.parentNode.insertBefore(permanentElement, remotePermanentElement);
             remotePermanentElement.parentNode.removeChild(remotePermanentElement);

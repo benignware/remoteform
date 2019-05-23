@@ -1033,14 +1033,17 @@ var createSubmitHandler = function createSubmitHandler(selector, options) {
 
           var remoteElement = dom.querySelector(remoteSelector); // Find permanent elements
 
-          _toConsumableArray(remoteElement.querySelectorAll('*[remoteform-permanent]')).map(function (remotePermanentElement) {
+          _toConsumableArray(remoteElement.querySelectorAll('*[data-remoteform-permanent]')).map(function (remotePermanentElement) {
             return {
               remotePermanentElement: remotePermanentElement,
               permanentElement: targetElement.querySelector("*[id='".concat(remotePermanentElement.getAttribute('id'), "']"))
             };
-          }).forEach(function (_ref) {
-            var permanentElement = _ref.permanentElement,
-                remotePermanentElement = _ref.remotePermanentElement;
+          }).filter(function (_ref) {
+            var permanentElement = _ref.permanentElement;
+            return permanentElement;
+          }).forEach(function (_ref2) {
+            var permanentElement = _ref2.permanentElement,
+                remotePermanentElement = _ref2.remotePermanentElement;
             remotePermanentElement.parentNode.insertBefore(permanentElement, remotePermanentElement);
             remotePermanentElement.parentNode.removeChild(remotePermanentElement);
           });
