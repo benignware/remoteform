@@ -1,6 +1,6 @@
 {
   "name": "remoteform",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Ajaxify forms easily",
   "main": "dist/remoteform.js",
   "scripts": {
