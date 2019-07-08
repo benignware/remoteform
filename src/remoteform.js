@@ -1,6 +1,10 @@
 import uniqueSelector from 'unique-selector';
 import qs from 'qs';
 import getFormData from 'get-form-data';
+import 'url-polyfill';
+import 'mdn-polyfills/Element.prototype.closest';
+import 'mdn-polyfills/Element.prototype.classList';
+import 'isomorphic-fetch';
 
 
 const updateElement = (element, otherElement, updateContent = true) => {
