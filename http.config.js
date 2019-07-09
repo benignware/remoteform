@@ -12,7 +12,6 @@ module.exports = {
   mocks: {
     '/submit.html': {
       post: function(request, response) {
-        const html = readFileSync(path.join(__dirname, 'test/fixtures/update.html'));
         const form = new IncomingForm();
         const { headers } = request;
 
@@ -20,10 +19,18 @@ module.exports = {
         console.log('headers: ', headers);
         form.parse(request, (err, fields) => {
           console.log('fields: ', fields); // ES
-        });
 
-        // Send response
-        response.send(html);
+          let output = null;
+
+          if (fields['test']) {
+            output = readFileSync(path.join(__dirname, 'test/fixtures/success.html'));
+          } else {
+            output = readFileSync(path.join(__dirname, 'test/fixtures/error.html'));
+          }
+
+          // Send response
+          response.send(output);
+        });
       }
     }
   }

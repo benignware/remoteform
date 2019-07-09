@@ -73,6 +73,13 @@ const createSubmitHandler = (selector, options) => event => {
     const remoteSelector = options.remoteSelector || uniqueSelector(targetElement);
 
     fetch(url, request).then(response => {
+
+      // Follow redirects
+      if (response.redirected) {
+        window.location.href = response.url;
+        return Promise.resolve();
+      }
+
       response.text().then(html => {
         // Parse html
         const dom = document.createElement( 'div' );
@@ -81,19 +88,20 @@ const createSubmitHandler = (selector, options) => event => {
         // Find remote element
         const remoteElement = dom.querySelector(remoteSelector);
 
-        // Find permanent elements
-        [ ...remoteElement.querySelectorAll('*[data-remoteform-permanent]') ]
-          .map((remotePermanentElement) => ({
-            remotePermanentElement,
-            permanentElement: targetElement.querySelector(`*[id='${remotePermanentElement.getAttribute('id')}']`),
-          }))
-          .filter(({ permanentElement }) => permanentElement)
-          .forEach(({ permanentElement, remotePermanentElement }) => {
-            remotePermanentElement.parentNode.insertBefore(permanentElement, remotePermanentElement);
-            remotePermanentElement.parentNode.removeChild(remotePermanentElement);
-          });
-
         if (remoteElement) {
+          // Find permanent elements
+          [ ...remoteElement.querySelectorAll('*[data-remoteform-permanent]') ]
+            .map((remotePermanentElement) => ({
+              remotePermanentElement,
+              permanentElement: targetElement.querySelector(`*[id='${remotePermanentElement.getAttribute('id')}']`),
+            }))
+            .filter(({ permanentElement }) => permanentElement)
+            .forEach(({ permanentElement, remotePermanentElement }) => {
+              remotePermanentElement.parentNode.insertBefore(permanentElement, remotePermanentElement);
+              remotePermanentElement.parentNode.removeChild(remotePermanentElement);
+            });
+
+
           if (typeof options.update === 'function') {
             options.update(targetElement, remoteElement);
           }

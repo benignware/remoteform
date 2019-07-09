@@ -13,9 +13,10 @@
         <h1>remoteform</h1>
         <p>Ajaxify forms easily<p>
         <div id="test" class="remoteform">
-          <form action="/submit.html" method="POST" class="form" novalidate>
+          <form action="/submit.html" method="POST" class="form is-invalid">
             <div class="form-group">
-              <input required class="form-control" name="test" value=""/>
+              <input class="form-control" name="test" value=""/>
+              <div style="color: red">ERROR MESSAGE</div>
             </div>
             <button class="btn btn-primary" type="submit">Submit</button>
             <div id="permanent" data-remoteform-permanent>Permanent</div>
